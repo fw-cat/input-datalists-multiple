@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>
+    Input Text Datalists Multiple
+  </title>
+  <link rel="stylesheet" href="/css/input.datalists.multiple.css">
+</head>
+
+<body>
+  <label for="multipleTextInput">入力フォーム</label>
+  <input type="text" id="multipleTextInput" name="multipleText" list="multipleText">
+  <datalist id="multipleText">
+    <option value="オプション1">
+    <option value="オプション2">
+    <option value="オプション3">
+  </datalist>
+  <script src="/js/input.datalists.multiple.js"></script>
+  <script>
+    let input1 = multipleTextInput('multipleTextInput', {
+      close_btn: "閉じる"
+    })
+  </script>
+</body>
+
+</html>
