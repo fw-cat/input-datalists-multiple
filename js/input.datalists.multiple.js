@@ -1,9 +1,14 @@
 ;!(function() {
   multipleTextInput = (inputId, _options) => {
     // 各種設定
-    let defaults = Object.assign({},{
-      'close_btn': "x"
-    }, _options)
+    let _defaults = {
+      close_btn: {
+        label: 'x',
+        class: [],
+      }
+    }
+    let defaults = _deepClone(_defaults, _options)
+    console.dir(defaults.close_btn)
 
     // 選択された値の配列
     let selectValues = [];
@@ -29,6 +34,18 @@
     mainInput.parentNode.insertBefore(subInput, mainInput.nextElementSibling)
     mainInput.parentNode.insertBefore(selectArea, subInput.nextElementSibling)
 
+    // オプション更新
+    function _deepClone(_defaults, _overrides = {}) {
+      let defaults = {}
+      // closeボタン系の更新
+      if ('close_btn' in _overrides) {
+        defaults['close_btn'] = Object.assign({}, _defaults.close_btn, _overrides.close_btn)
+      } else {
+        defaults['close_btn'] = _defaults.close_btn
+      }
+      return defaults
+    }
+
     // テキストの追加アクション
     const _subInput = (e) => {
       let value = e.target.value
@@ -39,7 +56,11 @@
 
       let closeBtn = document.createElement("a")
       closeBtn.href = "#"
-      closeBtn.innerHTML = defaults.close_btn
+      closeBtn.innerHTML = defaults.close_btn.label
+      console.log(defaults.close_btn, typeof defaults.close_btn.class)
+      defaults.close_btn.class.forEach(className => {
+        closeBtn.classList.add(className)
+      });
       closeBtn.addEventListener("click",(e) => _closeBtn(e))
       areaTag.appendChild(closeBtn)
 
