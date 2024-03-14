@@ -2,13 +2,16 @@
   multipleTextInput = (inputId, _options) => {
     // 各種設定
     let _defaults = {
+      text_input: {
+        class: [],
+      },
       close_btn: {
         label: 'x',
         class: [],
       }
     }
     let defaults = _deepClone(_defaults, _options)
-    console.dir(defaults.close_btn)
+    console.dir(defaults)
 
     // 選択された値の配列
     let selectValues = [];
@@ -27,7 +30,10 @@
     // 表示用入力欄
     let subInput = document.createElement("input")
     subInput.classList.add("select-input")
-    subInput.setAttribute("list", mainInput.getAttribute("list"))
+    defaults.text_input.class.forEach(className => {
+      subInput.classList.add(className)
+    });
+  subInput.setAttribute("list", mainInput.getAttribute("list"))
     subInput.addEventListener("change", (e) => _subInput(e))
 
     // 表示要素の追加
@@ -37,6 +43,13 @@
     // オプション更新
     function _deepClone(_defaults, _overrides = {}) {
       let defaults = {}
+      // 入力欄の更新
+      if ('text_input' in _overrides) {
+        defaults['text_input'] = Object.assign({}, _defaults.text_input, _overrides.text_input)
+      } else {
+        defaults['text_input'] = _defaults.text_input
+      }
+
       // closeボタン系の更新
       if ('close_btn' in _overrides) {
         defaults['close_btn'] = Object.assign({}, _defaults.close_btn, _overrides.close_btn)
